@@ -1,50 +1,86 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FaBullseye, FaEye, FaBalanceScale } from 'react-icons/fa';
 
 const About = () => {
+  const cards = [
+    {
+      title: 'Our Mission',
+      text: "To provide luxurious, comfortable, and memorable experiences for every guest through unmatched service, detail, and hospitality.",
+      icon: <FaBullseye />,
+    },
+    {
+      title: 'Our Vision',
+      text: "To become the region’s top hospitality brand, creating a warm and innovative environment for all guests, both business and leisure.",
+      icon: <FaEye />,
+    },
+    {
+      title: 'Our Values',
+      text: "Customer Satisfaction, Innovation, Integrity, and Sustainability guide everything we do.",
+      icon: <FaBalanceScale />,
+    },
+  ];
+
   return (
-    <div className="bg-gradient-to-br from-green-600 to-gray-300 min-h-screen py-20 px-4">
-      {/* About Header with Animation */}
-      <motion.section
+    <div className="bg-white min-h-screen py-20 px-6">
+      {/* Header */}
+      <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="text-center mb-12"
+        className="text-center mb-16"
       >
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">About Us</h1>
-        <p className="text-gray-200 text-lg max-w-xl mx-auto mb-8">
-          Discover our journey, values, and what drives us to provide exceptional experiences to our guests.
+        <h1 className="text-5xl font-extrabold text-gray-900 mb-4">About Us</h1>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          Learn more about our mission, vision, and values — the foundation of everything we do for our guests.
         </p>
-      </motion.section>
+      </motion.div>
 
-      {/* About Content Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.8 }}
-        className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-10"
-      >
-        <h2 className="text-3xl font-bold text-green-600 mb-6">Our Mission</h2>
-        <p className="text-gray-600 text-lg mb-6">
-          Our mission is to provide luxurious, comfortable, and memorable experiences for every guest that walks through our doors. 
-          We strive to exceed expectations in service, amenities, and attention to detail, ensuring every stay is unforgettable.
-        </p>
+      {/* Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+        {cards.map((card, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: index * 0.2 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.03 }}
+            className="bg-white rounded-xl shadow-xl p-8 text-center hover:shadow-2xl transition duration-300 border border-gray-100"
+          >
+            {/* Dancing Icon */}
+            <motion.div
+              animate={{
+                y: [0, -5, 0],
+                rotate: [0, 5, -5, 0],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeInOut",
+              }}
+              className="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center bg-amber-600 shadow-md text-white text-4xl"
+            >
+              {card.icon}
+            </motion.div>
 
-        <h2 className="text-3xl font-bold text-green-600 mb-6">Our Vision</h2>
-        <p className="text-gray-600 text-lg mb-6">
-          Our vision is to be the leading hospitality provider in the region, offering innovative services and creating a 
-          sense of belonging for every guest. We aim to deliver top-tier experiences that cater to both business and leisure travelers.
-        </p>
+            <h2 className="text-2xl font-bold text-amber-600 mb-4">{card.title}</h2>
+            <p className="text-gray-600 text-md">{card.text}</p>
 
-        <h2 className="text-3xl font-bold text-green-600 mb-6">Our Values</h2>
-        <ul className="list-disc list-inside text-gray-600 text-lg space-y-4">
-          <li><strong>Customer Satisfaction:</strong> Our guests' comfort and happiness are our top priority.</li>
-          <li><strong>Innovation:</strong> We constantly improve our services and facilities to meet the ever-evolving needs of our guests.</li>
-          <li><strong>Integrity:</strong> We conduct our business with honesty, transparency, and responsibility.</li>
-          <li><strong>Sustainability:</strong> We are committed to eco-friendly practices that contribute to a better future for our planet.</li>
-        </ul>
-      </motion.section>
+            {card.title === 'Our Values' && (
+              <ul className="mt-4 text-left list-disc list-inside text-gray-600 space-y-2 text-sm">
+                <li><strong>Customer Satisfaction:</strong> Guests first, always.</li>
+                <li><strong>Innovation:</strong> Constantly evolving our services.</li>
+                <li><strong>Integrity:</strong> We do what’s right.</li>
+                <li><strong>Sustainability:</strong> Committed to the planet.</li>
+              </ul>
+            )}
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };

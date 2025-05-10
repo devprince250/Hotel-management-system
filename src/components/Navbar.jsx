@@ -1,78 +1,124 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaHotel, FaHome, FaBed, FaCalendarAlt, FaInfoCircle, FaPhone, FaSignInAlt, FaUserPlus, FaConciergeBell } from 'react-icons/fa';
+import {
+  FaHotel, FaHome, FaBed, FaCalendarAlt, FaInfoCircle,
+  FaPhone, FaSignInAlt, FaUserPlus, FaConciergeBell
+} from 'react-icons/fa';
 import { motion } from 'framer-motion';
+
+const navLinks = [
+  { to: "/", label: "Home", icon: <FaHome /> },
+  { to: "/rooms", label: "Rooms", icon: <FaBed /> },
+  { to: "/reservations", label: "Reservations", icon: <FaCalendarAlt /> },
+  { to: "/services", label: "Services", icon: <FaConciergeBell /> },
+  { to: "/about", label: "About", icon: <FaInfoCircle /> },
+  { to: "/contact", label: "Contact", icon: <FaPhone /> },
+  { to: "/login", label: "Login", icon: <FaSignInAlt /> },
+  { to: "/signup", label: "Sign Up", icon: <FaUserPlus /> },
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <motion.nav
-      className="bg-gray-900 text-gray-200 shadow-lg fixed w-full top-0 z-50"
+      className="bg-amber-800 text-white shadow-lg fixed w-full top-0 z-50"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center space-x-2 text-green-600 text-2xl font-bold">
-          <FaHotel />
-          <span>Hotel Manager</span>
-        </div>
+        <motion.div 
+          className="flex items-center space-x-2 text-amber-100 text-2xl font-bold"
+          whileHover={{ scale: 1.05 }}
+        >
+          <FaHotel className="text-amber-200" />
+          <span>GrandStay</span>
+        </motion.div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-8 text-base font-medium">
-          <Link to="/" className="flex items-center space-x-1 hover:text-green-600 transition">
-            <FaHome /><span>Home</span>
-          </Link>
-          <Link to="/rooms" className="flex items-center space-x-1 hover:text-green-600 transition">
-            <FaBed /><span>Rooms</span>
-          </Link>
-          <Link to="/reservations" className="flex items-center space-x-1 hover:text-green-600 transition">
-            <FaCalendarAlt /><span>Reservations</span>
-          </Link>
-          <Link to="/services" className="flex items-center space-x-1 hover:text-green-600 transition">
-            <FaConciergeBell /><span>Services</span>
-          </Link>
-          <Link to="/about" className="flex items-center space-x-1 hover:text-green-600 transition">
-            <FaInfoCircle /><span>About</span>
-          </Link>
-          <Link to="/contact" className="flex items-center space-x-1 hover:text-green-600 transition">
-            <FaPhone /><span>Contact</span>
-          </Link>
-          <Link to="/login" className="flex items-center space-x-1 hover:text-green-600 transition">
-            <FaSignInAlt /><span>Login</span>
-          </Link>
-          <Link to="/signup" className="flex items-center space-x-1 hover:text-green-600 transition">
-            <FaUserPlus /><span>Sign Up</span>
-          </Link>
+        <div className="hidden md:flex space-x-6 text-base font-medium">
+          {navLinks.map((link, idx) => (
+            <motion.div
+              whileHover={{ 
+                y: -2,
+                color: "#FEF3C7" // amber-50
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400 }}
+              key={idx}
+              className="relative group"
+            >
+              <Link
+                to={link.to}
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg transition"
+              >
+                <span className="text-amber-200">{link.icon}</span>
+                <span>{link.label}</span>
+              </Link>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-amber-200 w-0 group-hover:w-4/5 transition-all duration-300"></div>
+            </motion.div>
+          ))}
         </div>
 
         {/* Mobile Icon */}
-        <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-white focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+        <motion.div 
+          className="md:hidden"
+          whileTap={{ scale: 0.9 }}
+        >
+          <button 
+            onClick={toggleMenu} 
+            className="text-amber-100 focus:outline-none p-2 rounded-lg hover:bg-amber-700 transition"
+            aria-label="Menu"
+          >
+            {isOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
           </button>
-        </div>
+        </motion.div>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`${isOpen ? 'block' : 'hidden'} md:hidden bg-gray-800 text-white py-4`}>
-        <div className="flex flex-col items-center space-y-4 text-base">
-          <Link to="/" className="hover:text-green-600 transition"><FaHome className="inline" /> Home</Link>
-          <Link to="/rooms" className="hover:text-green-600 transition"><FaBed className="inline" /> Rooms</Link>
-          <Link to="/reservations" className="hover:text-green-600 transition"><FaCalendarAlt className="inline" /> Reservations</Link>
-          <Link to="/services" className="hover:text-green-600 transition"><FaConciergeBell className="inline" /> Services</Link>
-          <Link to="/about" className="hover:text-green-600 transition"><FaInfoCircle className="inline" /> About</Link>
-          <Link to="/contact" className="hover:text-green-600 transition"><FaPhone className="inline" /> Contact</Link>
-          <Link to="/login" className="hover:text-green-600 transition"><FaSignInAlt className="inline" /> Login</Link>
-          <Link to="/signup" className="hover:text-green-600 transition"><FaUserPlus className="inline" /> Sign Up</Link>
-        </div>
-      </div>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, x: -300 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -300 }}
+          transition={{ type: "spring", damping: 25 }}
+          className="fixed top-16 left-0 w-64 h-full bg-amber-900 text-white flex flex-col p-6 space-y-6 text-base font-medium shadow-xl md:hidden z-40"
+        >
+          {navLinks.map((link, idx) => (
+            <motion.div
+              whileHover={{ 
+                x: 5,
+                color: "#FEF3C7"
+              }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              key={idx}
+              onClick={closeMenu}
+              className="border-b border-amber-700/50 pb-4 last:border-0"
+            >
+              <Link 
+                to={link.to} 
+                className="flex items-center space-x-3"
+              >
+                <span className="text-amber-200 text-lg">{link.icon}</span>
+                <span>{link.label}</span>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
     </motion.nav>
   );
 };

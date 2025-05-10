@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaGoogle, FaEnvelope, FaLock } from 'react-icons/fa'; 
+import { FaGoogle, FaEnvelope, FaKey, FaSignInAlt } from 'react-icons/fa'; 
 import { motion } from 'framer-motion'; // Import framer-motion
 
 const Login = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      // Simulate successful form submission
+      alert('Login successful!');
+    }, 2000); // Simulate 2-second delay for submission
+  };
+
   return (
-    <div className="bg-gradient-to-br from-green-600 to-gray-300 min-h-screen py-20 px-4">
+    <div className="bg-white min-h-screen py-20 px-4 flex items-center justify-center">
       <motion.div 
         initial={{ opacity: 0, y: 50 }} 
         animate={{ opacity: 1, y: 0 }} 
@@ -22,34 +34,34 @@ const Login = () => {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="text-3xl font-bold text-center text-green-600 mb-6"
+            className="text-3xl font-bold text-gray-900 text-center mb-6"
           >
             Log In
           </motion.h2>
 
-          {/* Google Login */}
+          {/* Google Login Button */}
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full flex items-center justify-center gap-2 bg-green-600 text-white py-2 rounded-lg hover:bg-red-800 transition mb-4"
+            className="w-full flex items-center justify-center gap-3 bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition mb-4"
           >
-            <FaGoogle className="w-5 h-5" />
-            Continue with Google
+            <FaGoogle className="w-5 h-5 text-amber-600" />
+            <span>Continue with Google</span>
           </motion.button>
 
           <div className="flex items-center justify-between mb-4">
             <hr className="border-t border-gray-300 w-full" />
-            <span className="text-sm text-gray-500 mx-2">or</span>
+            <span className="text-sm text-gray-600 mx-2">or</span>
             <hr className="border-t border-gray-300 w-full" />
           </div>
 
           {/* Login Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Email Input */}
             <div className="relative">
               <label className="block text-sm text-gray-700">Email</label>
-              <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 focus-within:ring-2 focus-within:ring-green-600">
-                <FaEnvelope className="text-green-600 w-5 h-5" />
+              <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 focus-within:ring-2 focus-within:ring-amber-600">
+                <FaEnvelope className="text-amber-600 w-5 h-5" />
                 <input
                   type="email"
                   className="w-full px-4 py-2 border-none focus:outline-none pl-10"
@@ -61,8 +73,8 @@ const Login = () => {
             {/* Password Input */}
             <div className="relative">
               <label className="block text-sm text-gray-700">Password</label>
-              <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 focus-within:ring-2 focus-within:ring-green-600">
-                <FaLock className="text-green-600 w-5 h-5" />
+              <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 focus-within:ring-2 focus-within:ring-amber-600">
+                <FaKey className="text-amber-600 w-5 h-5" />
                 <input
                   type="password"
                   className="w-full px-4 py-2 border-none focus:outline-none pl-10"
@@ -71,13 +83,27 @@ const Login = () => {
               </div>
             </div>
 
+            {/* Log In Button with Animation */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+              disabled={isSubmitting}
+              className={`w-full flex items-center justify-center gap-3 ${isSubmitting ? 'bg-gray-500' : 'bg-amber-600'} text-white py-2 rounded-lg transition`}
             >
-              Log In
+              {isSubmitting ? (
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: 360 }}
+                  transition={{ loop: Infinity, duration: 1 }}
+                  className="w-5 h-5 animate-spin"
+                >
+                  <FaSignInAlt />
+                </motion.div>
+              ) : (
+                <FaSignInAlt className="w-5 h-5" />
+              )}
+              <span>{isSubmitting ? 'Submitting...' : 'Log In'}</span>
             </motion.button>
           </form>
 
@@ -88,7 +114,7 @@ const Login = () => {
             className="text-center text-sm text-gray-600 mt-4"
           >
             Don't have an account?{' '}
-            <Link to="/signup" className="text-green-600 font-medium hover:underline">
+            <Link to="/signup" className="text-amber-600 font-medium hover:underline">
               Sign Up
             </Link>
           </motion.p>
