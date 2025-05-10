@@ -9,7 +9,7 @@ import Signup from './components/Signup';
 import About from './components/About';
 import Login from './components/Login';
 import Reservations from './components/Reservations';
-import CountTrack from './components/CountTrack';
+
 import Formvalidation from './components/Formvalidation';
 import Services from './components/services';
 import BookingConfirmationPage from './components/BookingConfirmationPage'; // Irinde kuyitirira Home
@@ -30,7 +30,7 @@ function App() {
           <Route path="About" element={<About />} />
           <Route path="Login" element={<Login />} />
           <Route path="Reservations" element={<Reservations />} />
-          <Route path="CountTrack" element={<CountTrack />} />
+         
           <Route path="Formvalidation" element={<Formvalidation />} />
           <Route path="Services" element={<Services />} />
           <Route path="BookingConfirmationPage" element={<BookingConfirmationPage />} />
