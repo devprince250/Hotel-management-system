@@ -67,7 +67,7 @@ const Home = () => {
       <section className="bg-gray-50 py-20 px-6 md:px-12">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <motion.h2
-            className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-4"
+            className="text-3xl sm:text-4xl font-extrabold text-gray-700 mb-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
